@@ -1,0 +1,65 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+    defaultConfig {
+        applicationId "io.github.yusukeiwaki.imadoko"
+        minSdkVersion 17
+        targetSdkVersion 25
+        versionCode 1
+        versionName "v1"
+
+        vectorDrawables.useSupportLibrary = true
+    }
+    signingConfigs {
+        release {
+            storeFile project.rootProject.file('YusukeIwaki.jks').getCanonicalFile()
+            storePassword System.getenv("KEYSTORE_PASSWORD")
+            keyAlias System.getenv("KEY_ALIAS")
+            keyPassword System.getenv("KEY_PASSWORD")
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+ext {
+    supportLibraryVersion = '25.3.1'
+    firebaseVersion = '10.2.4'
+    googlePlayServicesVersion = '10.2.4'
+}
+
+dependencies {
+    compile "com.android.support:appcompat-v7:$supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$supportLibraryVersion"
+    compile "com.android.support:design:$supportLibraryVersion"
+
+    compile "com.google.firebase:firebase-messaging:$firebaseVersion"
+    compile 'com.parse.bolts:bolts-tasks:1.4.0'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    compile 'com.github.renaudcerrato:static-maps-api:1.0.2'
+    compile 'com.github.bumptech.glide:glide:4.0.0-RC0'
+    compile 'com.github.bumptech.glide:okhttp3-integration:4.0.0-RC0'
+
+    provided "org.immutables:value:2.4.4"
+    annotationProcessor "org.immutables:value:2.4.4"
+
+    compile "com.google.android.gms:play-services-maps:$googlePlayServicesVersion"
+    compile "com.google.android.gms:play-services-location:$googlePlayServicesVersion"
+}
+
+apply plugin: 'com.google.gms.google-services'

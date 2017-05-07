@@ -1,1 +1,1 @@
-# imakara-android
+# imadoko-android
